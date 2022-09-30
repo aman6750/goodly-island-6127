@@ -1,8 +1,10 @@
 package com.TMS.bean;
 
+import java.sql.Date;
+
 public class tenderbean {
 
-	private int tid;
+	private String tid;
 	private String tname;
 	private String ttype;
 	private int tprice;
@@ -11,7 +13,7 @@ public class tenderbean {
 	private String tlocation;
 	
 	
-	public tenderbean(int tid, String tname, String ttype, int tprice, String tdescription, String tdeadline,
+	public tenderbean(String tid, String tname, String ttype, int tprice, String tdescription, String tdeadline2,
 			String tlocation) {
 		super();
 		this.tid = tid;
@@ -19,7 +21,7 @@ public class tenderbean {
 		this.ttype = ttype;
 		this.tprice = tprice;
 		this.tdescription = tdescription;
-		this.tdeadline = tdeadline;
+		this.tdeadline = tdeadline2;
 		this.tlocation = tlocation;
 	}
 	
@@ -34,12 +36,12 @@ public class tenderbean {
 				+ ", tdescription=" + tdescription + ", tdeadline=" + tdeadline + ", tlocation=" + tlocation + "]";
 	}
 
-	public int getTid() {
+	public String getTid() {
 		return tid;
 	}
 
 
-	public void setTid(int tid) {
+	public void setTid(String tid) {
 		this.tid = tid;
 	}
 
