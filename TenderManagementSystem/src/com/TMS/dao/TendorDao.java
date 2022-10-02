@@ -22,4 +22,8 @@ public interface TendorDao {
 	public List<Tender_statusbean> getAllAssignedTenders() throws AdminException;
 	
 
+	public boolean removeTendor(String tid)throws AdminException;
+	
+	public String updateTender(tenderbean tender)throws AdminException;
+	
 }
