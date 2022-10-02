@@ -3,16 +3,24 @@ package com.TMS.Main;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.List;
 import java.util.Scanner;
 
+import com.TMS.bean.Bidderbean;
+import com.TMS.bean.Vendorbean;
+import com.TMS.bean.tenderbean;
+import com.TMS.dao.BidderDao;
+import com.TMS.dao.BidderDaoImpl;
+import com.TMS.dao.TendorDao;
+import com.TMS.dao.TendorDaoImpl;
+import com.TMS.dao.VendorDaoImpl;
+import com.TMS.dao.vendorDao;
 import com.TMS.exception.AdminException;
 import com.TMS.utility.DBUtil;
 
 public class Main {
 	
-	public static boolean isadminlogin = false; 
-	
-	public static boolean isvendorlogin = false; 
+
 
 	public static void main(String[] args)  {
 		// TODO Auto-generated method stub
@@ -53,8 +61,163 @@ public class Main {
             			   
             			   System.out.println("Welcome as an Admin...!");
             			   
-            			   isadminlogin=true;
+            			   while(true) {
             			   
+            			   System.out.println("Select any one of the following: ");
+            			   
+            			   System.out.println("2. Register new Vendor."+"\n"+ "3. View all the vendors."+"\n"+"4. Create new tenders."+"\n"+ "5. View All the Tenders."+"\n"+"6. View All the Bids of a tender."+"\n"+"7. Assign tender to a vendor.");
+            			   
+            			   
+            					   
+            					   int k = sc.nextInt();
+            			   
+            			   switch (k) {
+						case 2: {
+							
+							System.out.println("WELCOME TO REGISTER VENDOR");
+							
+							System.out.println("Enter Vendor id");
+							String vid = sc.next();
+							
+							System.out.println("Enter Vendor name");
+							String name = sc.next();
+							
+							System.out.println("Enter Vendor mobile Number");
+							String mobile = sc.next();
+							
+							System.out.println("Enter Vendor email");
+							String email = sc.next();
+							
+							System.out.println("Enter Vendor password for register");
+							String password = sc.next();
+							
+							System.out.println("Enter Vendor Company name");
+							String company = sc.next();
+							
+							System.out.println("Enter Vendor address");
+							String address = sc.next();
+							
+							
+							Vendorbean vb = new Vendorbean(vid,  password,  name,  mobile,  email,  company,
+								 address);
+							
+							vendorDao dao = new VendorDaoImpl();
+							
+							String status =dao.registernewVendor(vb);
+							
+							System.out.println(status);
+							
+						break;
+						}
+						case 3:{
+							
+							System.out.println("LIST OF VENDORS:");
+							
+							vendorDao dao = new VendorDaoImpl();
+							List<Vendorbean> list=dao.viewAllVendors();
+							
+							for(Vendorbean v: list) {
+								System.out.println(v);
+							}
+							
+							break;
+						}
+						case 4:{
+							
+							System.out.println("Enter tendor id");
+							String tid = sc.next();
+							
+							System.out.println("Enter tendor name");
+							String tname = sc.next();
+							
+							System.out.println("Enter tendor type");
+							String ttype = sc.next();
+							
+							System.out.println("Enter tendor price");
+							int tprice = sc.nextInt();
+							
+							System.out.println("enter description of the tendor");
+							String tdesc = sc.next();
+							
+							System.out.println("Enter tendor deadline date");
+							String tdeadline = sc.next();
+							
+							System.out.println("Enter tendor location");
+							String tlocation = sc.next();
+							
+							
+							tenderbean vb = new tenderbean( tid, tname, ttype, tprice, tdesc, tdeadline,tlocation);
+							
+							TendorDao dao = new TendorDaoImpl();
+							
+							String status =dao.CreatenewTendor(vb);
+							
+							System.out.println(status);
+							
+							break;
+						}
+						case 5:{
+							System.out.println("LIST OF TENDORS:");
+							
+							
+							TendorDao dao = new TendorDaoImpl();
+							List<tenderbean> list =dao.getAllTenders();
+							
+							for(tenderbean t: list) {
+								System.out.println(t);
+							}
+							
+							break;
+						}
+						case 6:{
+							
+							System.out.println("Enter Tendor id :");
+							
+							String tid = sc.next();
+							
+							BidderDao dao = new BidderDaoImpl();
+							
+							List<Bidderbean> list=dao.getAllBidsOnTendor(tid);
+							
+							if(list.size()==0) {
+								System.out.println("Currntly no bid is there on tendor.");
+							}else {
+								
+								for(Bidderbean t: list) {
+									System.out.println(t);
+								}
+							}
+							
+							break;
+						}
+						
+						case 7:{
+							
+							System.out.println(" TO ASSIGN TENDOR TO VENDOR WE REQUIRE:");
+							
+							System.out.println(" ENTER VENDOR ID");
+							String vid = sc.next();
+							
+							System.out.println("ENTER TENDOR ID");
+							String tid = sc.next();
+							
+							System.out.println("ENTER BIDDER ID");
+							String bid = sc.next();
+							
+							TendorDao dao = new TendorDaoImpl();
+							String message =dao.assignTender(tid, vid, bid);
+							
+							System.out.println(message);
+							
+							break;
+						}
+							
+						default:
+							throw new IllegalArgumentException("Unexpected value: " +k);
+						}
+            			   
+            			   
+            		   }
             		   }else {
             			   throw new AdminException("invalid password or username");
             		   }
@@ -71,8 +234,7 @@ public class Main {
         	   
         	   
            }else if(n==2){
-        	   
-        	   
+        	           	   
         	   
                System.out.println("please enter your Username");
                
@@ -86,7 +248,7 @@ public class Main {
             	   
             	   PreparedStatement ps=conn.prepareStatement("select * from vendor where vname = ? and password = ?");
             	   ps.setString(1, uname);
-            	   ps.setString(1, upass);
+            	   ps.setString(2, upass);
             	   
             	   ResultSet rs=ps.executeQuery();
             	   
@@ -99,8 +261,127 @@ public class Main {
             			   
             			   System.out.println("Welcome as an Vendor...!");
             			   
-            			   isvendorlogin=true;
             			   
+            			   while(true) {
+            			   
+            			   		System.out.println("Select any one of the following: ");
+            			   
+            			   System.out.println("2. View all the current Tenders"+"\n"+ "3.Place a Bid against a Tender."+"\n"+"4. View status of a Bid(Whether Selected or Not)."+"\n"+ "5. View his own Bid History");
+            			   
+            			   
+            					   
+            					   int k = sc.nextInt();
+            			   
+            					   switch (k) {
+								case 2: {
+									
+									System.out.println("VIEWING ALL THE CURRENT TENDORS");
+									
+									
+									
+									
+									TendorDao dao = new TendorDaoImpl();
+									List<tenderbean> list =dao.getAllTenders();
+									
+									for(tenderbean t: list) {
+										System.out.println(t);
+									}
+									
+									break;
+									
+								}
+								
+								case 3: {
+									
+									
+									System.out.println("PLACING BID AGAINST TENDOR");
+									
+									System.out.println("ENTER BIDDER ID");
+									String bid = sc.next();
+									
+									System.out.println("ENTER YOUR VENDOR ID:");
+									String vid = sc.next();
+									
+									System.out.println("ENTER TENDOR ID YOU WANT TO BID ON :");
+									String tid = sc.next();
+									
+									System.out.println("ENTER YOUR BIDDER AMOUNT:");
+									int bamount = sc.nextInt();
+									
+									System.out.println("ENTER DEADLINE OF TENDOR ");
+									String deadline = sc.next();
+									
+									BidderDao dao = new BidderDaoImpl();
+									
+									String message =dao.bidTendor(bid, vid, tid, bamount, deadline);
+									
+									System.out.println(message);
+ 									
+									break;
+									
+								}
+								
+								case 4: {
+									
+									System.out.println("WELCOME TO View status of a Bid(Whether Selected or Not). ");
+									
+									System.out.println("TO view ACCEPTANCE of bid");
+																		
+									System.out.println("ENTER BIDDER ID");
+									String bid = sc.next();
+									
+									System.out.println("ENTER YOUR TENDOR ID:");
+									String tid = sc.next();
+									
+									System.out.println("ENTER YOUR VENDOR ID:");
+									String vid = sc.next();
+									
+									BidderDao dao = new BidderDaoImpl();
+									String message = dao.acceptBid(bid, tid, vid);
+									System.out.println(message);
+									
+									System.out.println("=======================");
+									
+									System.out.println("REJECTION STATUS ");
+									
+									String status =dao.rejectBid(bid);
+									
+									System.out.println(status);
+									
+									
+									break;
+									
+								}
+								
+								case 5: {
+	
+									System.out.println("View his own Bid History....");
+									
+									
+									System.out.println("ENTER YOUR VENDOR ID:");
+									String vid = sc.next();
+									
+									BidderDao dao = new BidderDaoImpl();
+ 
+									List<Bidderbean> list =dao.getAllBidsOfVendor(vid);
+									
+	
+									for(Bidderbean t: list) {
+										System.out.println(t);
+									}
+									
+									break;
+									
+								}
+
+								
+								default:
+									
+									throw new IllegalArgumentException("Unexpected value: " + k);
+									
+								}
+            			   
+            		   }
             		   }else {
             			   throw new AdminException("invalid password or username");
             		   }

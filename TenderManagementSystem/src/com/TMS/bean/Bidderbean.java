@@ -9,13 +9,13 @@ public class Bidderbean {
 	private String vid;
 	private String tid;
 	private int bidamount;
-	private Date deadline;
+	private String deadline;
 	private String status;
 	
 	
 	
 	
-	public Bidderbean(String bid, String vid, String tid, int bidamount, Date deadline, String status) {
+	public Bidderbean(String bid, String vid, String tid, int bidamount, String deadline, String status) {
 		super();
 		this.bid = bid;
 		this.vid = vid;
@@ -84,14 +84,14 @@ public class Bidderbean {
 
 
 
-	public Date getDeadline() {
+	public String getDeadline() {
 		return deadline;
 	}
 
 
 
 
-	public void setDeadline(Date deadline) {
+	public void setDeadline(String deadline) {
 		this.deadline = deadline;
 	}
 

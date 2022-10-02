@@ -57,6 +57,9 @@ public class TendorDaoImpl implements TendorDao {
 		return message;
 		
 	}
+	
+	
+	
 
 	@Override
 	public List<tenderbean> getTenderDetailsbyId(String id) throws AdminException {
@@ -145,12 +148,7 @@ public class TendorDaoImpl implements TendorDao {
 		
 		String status = "Not Assigned";
 		
-		
-		
-		 
-		
-		
-		
+
 		try(Connection conn = DBUtil.provideConnection()) {
 			PreparedStatement ps = conn.prepareStatement("select * from tender_status where tid=?");
 			
@@ -243,6 +241,75 @@ public class TendorDaoImpl implements TendorDao {
 		
 		
 		return statusList;
+	}
+
+
+
+
+	@Override
+	public boolean removeTendor(String tid) throws AdminException {
+		
+		boolean flag = false ;
+		
+		try (Connection conn =DBUtil.provideConnection()){
+			
+			PreparedStatement ps =conn.prepareStatement("delete from tendor where tid = ?");
+			ps.setString(1, tid);
+			
+			int x =ps.executeUpdate();
+			
+			if(x>0) {
+				flag = true;
+			}
+			
+			
+		} catch (SQLException e) {
+			// TODO: handle exception
+			throw new AdminException(e.getMessage());
+		}
+		
+		
+		return flag;
+		
+	}
+	
+	
+	@Override
+	public String updateTender(tenderbean tender)throws AdminException {
+		String status = "Tender Updation Failed!";
+		
+		
+		
+		
+		
+		try(Connection con = DBUtil.provideConnection()) {
+			PreparedStatement pst = con.prepareStatement("UPDATE tendor SET tname=?,ttype=?,tprice=?,tdescription=?,tdeadline=?,tlocation=? where tid=?");
+			
+			pst.setString(1, tender.getTname());
+			pst.setString(2, tender.getTtype());
+			pst.setInt(3, tender.getTprice());
+			pst.setString(4, tender.getTdescription());
+			
+//			Date deadline = tender.getTdeadline();
+//			java.sql.Date sDeadline = new java.sql.Date(deadline.getTime());
+//			pst.setDate(5, sDeadline);
+			
+			pst.setString(5,tender.getTdeadline());
+			
+			
+			pst.setString(6, tender.getTlocation());
+			pst.setString(7, tender.getTid());
+			int x=pst.executeUpdate();
+			if(x>0)
+				status="TENDER DETAILS UPDATED SUCCSESFULLY";
+			
+		} catch (SQLException e) {
+			status = "Error: "+e.getMessage();
+			e.printStackTrace();
+		}
+		
+		
+		return status;
 	}
 	
 	
