@@ -53,8 +53,10 @@ public class Main {
        			   System.out.println("Select any one of the following: ");
        			   
        			   System.out.println("2. Register new Vendor."+"\n"+ "3. View all the vendors."+"\n"+"4. Create new tenders."+"\n"+ "5. View All the Tenders."+"\n"+"6. View All the Bids of a tender."+"\n"+"7. Assign tender to a vendor.");
-       			   
-       			   System.out.println("8. return to main menu");
+       			
+       			   System.out.println("8. return back to admin menu");
+
+       			   System.out.println("9. return back to main menu");
        					   
        					   int k = sc.nextInt();
        			   
@@ -94,7 +96,7 @@ public class Main {
 						
 						System.out.println(status);
 						
-						admin();
+//						admin();
 						
 					break;
 					}
@@ -109,7 +111,7 @@ public class Main {
 							System.out.println(v);
 						}
 						
-						admin();
+//						admin();
 						
 						break;
 					}
@@ -145,7 +147,7 @@ public class Main {
 						
 						System.out.println(status);
 						
-						admin();
+//						admin();
 						break;
 					}
 					case 5:{
@@ -159,7 +161,7 @@ public class Main {
 							System.out.println(t);
 						}
 						
-						admin();
+//						admin();
 						break;
 					}
 					case 6:{
@@ -181,7 +183,7 @@ public class Main {
 							}
 						}
 						
-						admin();
+//						admin();
 						break;
 					}
 					
@@ -203,18 +205,26 @@ public class Main {
 						
 						System.out.println(message);
 						
-						admin();
+//						admin();
 						break;
 					}
 					
 					case 8:{
-						return ;
+						
+						admin();
+						break ;
+						
+					}
+					case 9:{
+						
+						main(null);
+						break ;
 						
 					}
 						
 					default:
 						System.out.println("enter valid choice");
-						admin();
+//						admin();
 					}
        			   
        			   
@@ -275,7 +285,9 @@ public class Main {
      			   
      			   System.out.println("2. View all the current Tenders"+"\n"+ "3.Place a Bid against a Tender."+"\n"+"4. View status of a Bid(Whether Selected or Not)."+"\n"+ "5. View his own Bid History");
      			   
-     			   System.out.println("6. return to main menu");
+     			   System.out.println("6. return to back vendor menu");
+
+       			   System.out.println("7. return to back main menu");
 
      					   
      					   int k = sc.nextInt();
@@ -295,7 +307,7 @@ public class Main {
 									System.out.println(t);
 								}
 								
-								vendor();
+//								vendor();
 								break;
 								
 							}
@@ -326,7 +338,7 @@ public class Main {
 								
 								System.out.println(message);
 								
-								vendor();
+//								vendor();
 								
 								break;
 								
@@ -361,7 +373,7 @@ public class Main {
 								
 								System.out.println(status);
 								
-								vendor();
+//								vendor();
 								
 								break;
 								
@@ -384,15 +396,24 @@ public class Main {
 									System.out.println(t);
 								}
 								
-								vendor();
+//								vendor();
 								break;
 								
 							}
 							
 							case 6:{
 								
-								return ;
+								vendor();
+								break ;
+								
 							}
+							case 7:{
+								
+								main(null);
+								break ;
+								
+							}
+							
 
 							
 							default:
